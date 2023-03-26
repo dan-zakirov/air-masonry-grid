@@ -29,6 +29,10 @@
                 type: 'number',
                 default: 16,
             },
+            lineheight: {
+                type: 'number',
+                default: 1.5,
+            },
         },    // Define block edit function
         edit: function (props) {
             // Get attributes
@@ -93,6 +97,7 @@
                                 tagName: 'p',
                                 placeholder: __('Enter text here', 'air-masonry-grid'),
                                 value: item.content,
+                                style: { lineHeight: props.attributes.lineheight },
                                 onChange: function (value) {
                                     updateItem(index, value);
                                 }
@@ -141,6 +146,16 @@
                             max: 30,
                             onChange: setFontSize,
                         }),
+                        el(RangeControl, {
+                            label: __('Line Height', 'air-masonry-grid'),
+                            value: props.attributes.lineheight,
+                            min: 1,
+                            max: 3,
+                            step: 0.1,
+                            onChange: function (value) {
+                                props.setAttributes({lineheight: value});
+                            }
+                        }),
                     ]),
                 ]),
             ];
@@ -163,6 +178,7 @@
                             backgroundColor: props.attributes.backgroundColor,
                             color: props.attributes.textColor,
                             fontSize: props.attributes.fontSize + 'px',
+                            lineHeight: props.attributes.lineheight,
                         },
                     }, el(editor.RichText.Content, {
                         tagName: 'p',
@@ -170,7 +186,6 @@
                     }));
                 })
             );
-        },
+        }
     });
 }(window.wp.blocks, window.wp.editor, window.wp.components, window.wp.i18n, window.wp.element));
-
